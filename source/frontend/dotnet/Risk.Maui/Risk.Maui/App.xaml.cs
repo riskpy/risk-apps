@@ -1,6 +1,7 @@
 ﻿using Risk.API.Client.Model;
 using Risk.Common.Helpers;
 using Risk.Maui.Services.AppEnvironment;
+using Risk.Maui.Services.Dialog;
 using Risk.Maui.Services.Settings;
 
 namespace Risk.Maui;
@@ -9,11 +10,13 @@ public partial class App : Application
 {
     private readonly ISettingsService _settingsService;
     private readonly IAppEnvironmentService _appEnvironmentService;
+    private readonly IDialogService _dialogService;
 
-    public App(ISettingsService settingsService, IAppEnvironmentService appEnvironmentService)
+    public App(ISettingsService settingsService, IAppEnvironmentService appEnvironmentService, IDialogService dialogService)
     {
         _settingsService = settingsService;
         _appEnvironmentService = appEnvironmentService;
+        _dialogService = dialogService;
 
         InitializeComponent();
 
@@ -62,7 +65,7 @@ public partial class App : Application
         }
         catch (Exception)
         {
-            Debug.WriteLine("La aplicación no está activa.");
+            await _dialogService.ShowAlertAsync("La aplicación no está activa.", "Oops!", "Ok");
             return;
         }
 
@@ -73,7 +76,7 @@ public partial class App : Application
             // Valida si la aplicación está activa
             if (!aplicacion.Activo)
             {
-                Debug.WriteLine("La aplicación no está activa.");
+                await _dialogService.ShowAlertAsync("La aplicación no está activa.", "Oops!", "Ok");
                 return;
             }
 
@@ -94,7 +97,7 @@ public partial class App : Application
                         break;
                     case -1:
                         //Console.Write("earlier than");
-                        Debug.WriteLine("Es necesaria una actualización de la aplicación");
+                        await _dialogService.ShowAlertAsync("Es necesaria una actualización de la aplicación", "Oops!", "Ok");
                         return;
                 }
             }

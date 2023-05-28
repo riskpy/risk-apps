@@ -1,4 +1,5 @@
 ﻿using Risk.Maui.Services.AppEnvironment;
+using Risk.Maui.Services.Dialog;
 using Risk.Maui.Services.Settings;
 
 namespace Risk.Maui;
@@ -29,6 +30,7 @@ public static class MauiProgram
     public static MauiAppBuilder RegisterAppServices(this MauiAppBuilder mauiAppBuilder)
     {
         mauiAppBuilder.Services.AddSingleton<ISettingsService, SettingsService>();
+        mauiAppBuilder.Services.AddSingleton<IDialogService, DialogService>();
 
         mauiAppBuilder.Services.AddSingleton<IAppEnvironmentService, AppEnvironmentService>(
         serviceProvider =>
