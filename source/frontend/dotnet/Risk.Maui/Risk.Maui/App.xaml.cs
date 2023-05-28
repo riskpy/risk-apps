@@ -31,7 +31,12 @@ public partial class App : Application
 
     protected override async void OnStart()
     {
-        await CheckAppVersion();
+        var error = await CheckAppVersion();
+        if (!string.IsNullOrEmpty(error))
+        {
+            await _dialogService.ShowAlertAsync(error, "Oops!", "Ok");
+            Quit();
+        }
         await RegisterDevice();
 
         var status = await CheckAndRequestLocationPermission();
@@ -56,17 +61,19 @@ public partial class App : Application
         base.OnResume();
     }
 
-    private async Task CheckAppVersion()
+    private async Task<string> CheckAppVersion()
     {
-        AplicacionPaginaRespuesta respuestaListarAplicaciones = null;
+        string error = string.Empty;
+
+        AplicacionPaginaRespuesta respuestaListarAplicaciones;
         try
         {
             respuestaListarAplicaciones = await _appEnvironmentService.GenApi.ListarAplicacionesAsync(null, _settingsService.ApiKey);
         }
         catch (Exception)
         {
-            await _dialogService.ShowAlertAsync("La aplicación no está activa.", "Oops!", "Ok");
-            return;
+            error = "La aplicación no está activa.";
+            return error;
         }
 
         if (respuestaListarAplicaciones.Codigo.Equals(RiskConstants.CODIGO_OK))
@@ -76,15 +83,14 @@ public partial class App : Application
             // Valida si la aplicación está activa
             if (!aplicacion.Activo)
             {
-                await _dialogService.ShowAlertAsync("La aplicación no está activa.", "Oops!", "Ok");
-                return;
+                error = "La aplicación no está activa.";
+                return error;
             }
 
             // Valida versión de la aplicación
-            Version versionAplicacion = new Version(AppInfo.Current.VersionString);
-
             if (!string.IsNullOrEmpty(aplicacion.VersionMinima))
             {
+                Version versionAplicacion = new Version(AppInfo.Current.VersionString);
                 Version versionServidor = new Version(aplicacion.VersionMinima);
 
                 switch (versionAplicacion.CompareTo(versionServidor))
@@ -97,11 +103,13 @@ public partial class App : Application
                         break;
                     case -1:
                         //Console.Write("earlier than");
-                        await _dialogService.ShowAlertAsync("Es necesaria una actualización de la aplicación", "Oops!", "Ok");
-                        return;
+                        error = "Es necesaria una actualización de la aplicación";
+                        return error;
                 }
             }
         }
+
+        return error;
     }
 
     private async Task RegisterDevice()
@@ -114,8 +122,8 @@ public partial class App : Application
         string paisIso = null;
         try
         {
-            string infoPaisIdioma = string.Empty; //DependencyService.Get<ILocationService>().GetCountry();
-            string[] infoPaisIdiomaList = infoPaisIdioma.Split('_');
+            string infoPaisIdioma = CultureInfo.CurrentCulture.Name;
+            string[] infoPaisIdiomaList = infoPaisIdioma.Split('-');
             idiomaIso = (string)infoPaisIdiomaList.GetValue(0);
             paisIso = (string)infoPaisIdiomaList.GetValue(1);
         }
@@ -136,6 +144,20 @@ public partial class App : Application
             Debug.WriteLine(ex);
         }
 
+        TipoDispositivo tipo;
+        if (DeviceInfo.Current.Idiom == DeviceIdiom.Phone)
+            tipo = TipoDispositivo.Mobile;
+        else if (DeviceInfo.Current.Idiom == DeviceIdiom.Tablet)
+            tipo = TipoDispositivo.Tablet;
+        else if (DeviceInfo.Current.Idiom == DeviceIdiom.Desktop)
+            tipo = TipoDispositivo.Desktop;
+        else if (DeviceInfo.Current.Idiom == DeviceIdiom.TV)
+            tipo = TipoDispositivo.Tv;
+        else if (DeviceInfo.Current.Idiom == DeviceIdiom.Watch)
+            tipo = TipoDispositivo.Watch;
+        else
+            tipo = TipoDispositivo.Mobile;
+
         DatoRespuesta datoRespuesta = await _appEnvironmentService.AutApi.RegistrarDispositivoAsync(null, null, new RegistrarDispositivoRequestBody
         {
             Dispositivo = new Dispositivo
@@ -144,7 +166,7 @@ public partial class App : Application
                 TokenDispositivo = deviceToken,
                 NombreSistemaOperativo = DeviceInfo.Current.Platform.ToString(),
                 VersionSistemaOperativo = DeviceInfo.Current.VersionString,
-                Tipo = TipoDispositivo.Mobile,
+                Tipo = tipo,
                 VersionAplicacion = AppInfo.Current.VersionString,
                 IdPaisIso2 = paisIso,
                 ZonaHoraria = offset,
