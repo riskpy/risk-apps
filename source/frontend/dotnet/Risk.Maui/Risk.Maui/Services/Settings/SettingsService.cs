@@ -10,6 +10,9 @@
         private const string DEVICE_TOKEN = "DEVICE_TOKEN";
         private const string IS_USER_LOGGED_IN = "IS_USER_LOGGED_IN";
         private const string IS_CONNECTED = "IS_CONNECTED";
+        private const string LATITUDE = "LATITUDE";
+        private const string LONGITUDE = "LONGITUDE";
+        private const string ALLOW_GPS_LOCATION = "ALLOW_GPS_LOCATION";
         #endregion
 
         #region Settings default values
@@ -20,6 +23,9 @@
         private readonly string DEVICE_TOKEN_DEFAULT = string.Empty;
         private readonly bool IS_USER_LOGGED_IN_DEFAULT = false;
         private readonly bool IS_CONNECTED_DEFAULT = true;
+        private readonly double LATITUDE_DEFAULT = 0;
+        private readonly double LONGITUDE_DEFAULT = 0;
+        private readonly bool ALLOW_GPS_LOCATION_DEFAULT = false;
         #endregion
 
         #region Settings properties
@@ -63,6 +69,24 @@
         {
             get => Preferences.Get(IS_CONNECTED, IS_CONNECTED_DEFAULT);
             set => Preferences.Set(IS_CONNECTED, value);
+        }
+
+        public double Latitude
+        {
+            get => Preferences.Get(LATITUDE, LATITUDE_DEFAULT);
+            set => Preferences.Set(LATITUDE, value);
+        }
+
+        public double Longitude
+        {
+            get => Preferences.Get(LONGITUDE, LONGITUDE_DEFAULT);
+            set => Preferences.Set(LONGITUDE, value);
+        }
+
+        public bool AllowGpsLocation
+        {
+            get => Preferences.Get(ALLOW_GPS_LOCATION, ALLOW_GPS_LOCATION_DEFAULT);
+            set => Preferences.Set(ALLOW_GPS_LOCATION, value);
         }
         #endregion
     }

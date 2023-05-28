@@ -31,6 +31,15 @@ public partial class App : Application
         await CheckAppVersion();
         await RegisterDevice();
 
+        var status = await CheckAndRequestLocationPermission();
+        _settingsService.AllowGpsLocation = (status == PermissionStatus.Granted);
+
+        if (_settingsService.AllowGpsLocation)
+        {
+            await GetGpsLocation();
+            await SendCurrentLocation();
+        }
+
         base.OnStart();
     }
 
@@ -143,6 +152,70 @@ public partial class App : Application
         if (datoRespuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
         {
             _settingsService.DeviceToken = datoRespuesta.Datos.Contenido;
+        }
+    }
+
+    public async Task<PermissionStatus> CheckAndRequestLocationPermission()
+    {
+        PermissionStatus status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+
+        if (status == PermissionStatus.Granted)
+            return status;
+
+        if (status == PermissionStatus.Denied && DeviceInfo.Platform == DevicePlatform.iOS)
+        {
+            // Prompt the user to turn on in settings
+            // On iOS once a permission has been denied it may not be requested again from the application
+            return status;
+        }
+
+        if (Permissions.ShouldShowRationale<Permissions.LocationWhenInUse>())
+        {
+            // Prompt the user with additional information as to why the permission is needed
+        }
+
+        status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+
+        return status;
+    }
+
+    private async Task GetGpsLocation()
+    {
+        try
+        {
+            var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+            var location = await Geolocation.Default.GetLocationAsync(request, CancellationToken.None);
+
+            if (location != null)
+            {
+                _settingsService.Latitude = location.Latitude;
+                _settingsService.Longitude = location.Longitude;
+            }
+        }
+        catch (Exception ex)
+        {
+            if (ex is FeatureNotSupportedException || ex is FeatureNotEnabledException || ex is PermissionException)
+            {
+                _settingsService.AllowGpsLocation = false;
+            }
+
+            // Unable to get location
+            Debug.WriteLine(ex);
+        }
+    }
+
+    private async Task SendCurrentLocation()
+    {
+        DatoRespuesta datoRespuesta = await _appEnvironmentService.AutApi.RegistrarUbicacionAsync(null, null, new RegistrarUbicacionRequestBody
+        {
+            TokenDispositivo = _settingsService.DeviceToken,
+            Latitud = _settingsService.Latitude,
+            Longitud = _settingsService.Longitude
+        });
+
+        if (!datoRespuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
+        {
+            Debug.WriteLine(datoRespuesta);
         }
     }
 }
