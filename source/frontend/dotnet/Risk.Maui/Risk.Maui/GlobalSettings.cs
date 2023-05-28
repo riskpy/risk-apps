@@ -9,7 +9,7 @@ public class GlobalSettings
     public GlobalSettings()
     {
         ApiBasePath = DefaultEndpoint;
-        ApiKey = "INSERT AUTHENTICATION TOKEN";
+        ApiKey = "INSERT API KEY";
     }
 
     public static GlobalSettings Instance { get; } = new GlobalSettings();
