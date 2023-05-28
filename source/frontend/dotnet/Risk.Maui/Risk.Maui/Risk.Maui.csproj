@@ -50,6 +50,16 @@
 	  <PackageReference Include="CommunityToolkit.MVVM" Version="8.2.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Models\" />
+	  <Folder Include="Helpers\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\..\..\..\risk\source\backend\Risk.API.Client\Risk.API.Client\src\Risk.API.Client\Risk.API.Client.csproj" />
+	  <ProjectReference Include="..\..\..\..\..\..\risk\source\backend\Risk.Common\Risk.Common.csproj" />
+	</ItemGroup>
+
 	<PropertyGroup Label="MauiAppAccelerator">
 		<wizardVersion>v1.2.3</wizardVersion>
 		<projectType>MVVMToolkit</projectType>

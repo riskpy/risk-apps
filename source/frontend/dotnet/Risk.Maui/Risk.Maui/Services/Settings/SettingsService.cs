@@ -3,6 +3,8 @@
     public class SettingsService : ISettingsService
     {
         #region Settings keys
+        private const string API_BASE_PATH = "API_BASE_PATH";
+        private const string API_KEY = "API_KEY";
         private const string ACCESS_TOKEN = "ACCESS_TOKEN";
         private const string REFRESH_TOKEN = "REFRESH_TOKEN";
         private const string DEVICE_TOKEN = "DEVICE_TOKEN";
@@ -11,6 +13,8 @@
         #endregion
 
         #region Settings default values
+        private readonly string API_BASE_PATH_DEFAULT = GlobalSettings.Instance.ApiBasePath;
+        private readonly string API_KEY_DEFAULT = GlobalSettings.Instance.ApiKey;
         private readonly string ACCESS_TOKEN_DEFAULT = string.Empty;
         private readonly string REFRESH_TOKEN_DEFAULT = string.Empty;
         private readonly string DEVICE_TOKEN_DEFAULT = string.Empty;
@@ -19,6 +23,18 @@
         #endregion
 
         #region Settings properties
+        public string ApiBasePath
+        {
+            get => Preferences.Get(API_BASE_PATH, API_BASE_PATH_DEFAULT);
+            set => Preferences.Set(API_BASE_PATH, value);
+        }
+
+        public string ApiKey
+        {
+            get => Preferences.Get(API_KEY, API_KEY_DEFAULT);
+            set => Preferences.Set(API_KEY, value);
+        }
+
         public string AccessToken
         {
             get => Preferences.Get(ACCESS_TOKEN, ACCESS_TOKEN_DEFAULT);
