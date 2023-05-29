@@ -1,5 +1,6 @@
 ﻿using Risk.API.Client.Model;
 using Risk.Common.Helpers;
+using Risk.Maui.Resources.Languages;
 using Risk.Maui.Services.AppEnvironment;
 using Risk.Maui.Services.Dialog;
 using Risk.Maui.Services.Settings;
@@ -34,7 +35,7 @@ public partial class App : Application
         var error = await CheckAppVersion();
         if (!string.IsNullOrEmpty(error))
         {
-            await _dialogService.ShowAlertAsync(error, "Oops!", "Ok");
+            await _dialogService.ShowAlertAsync(error, AppResources.AlertDefaultTitle, AppResources.AlertDefaultButtonLabel);
             Quit();
         }
         await RegisterDevice();
@@ -72,7 +73,7 @@ public partial class App : Application
         }
         catch (Exception)
         {
-            error = "La aplicación no está activa.";
+            error = AppResources.InactiveAppErrorMessage;
             return error;
         }
 
@@ -83,7 +84,7 @@ public partial class App : Application
             // Valida si la aplicación está activa
             if (!aplicacion.Activo)
             {
-                error = "La aplicación no está activa.";
+                error = AppResources.InactiveAppErrorMessage;
                 return error;
             }
 
@@ -103,7 +104,7 @@ public partial class App : Application
                         break;
                     case -1:
                         //Console.Write("earlier than");
-                        error = "Es necesaria una actualización de la aplicación";
+                        error = AppResources.OutOfDateAppErrorMessage;
                         return error;
                 }
             }
