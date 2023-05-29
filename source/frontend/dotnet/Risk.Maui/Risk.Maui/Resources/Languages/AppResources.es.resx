@@ -124,9 +124,9 @@
     <value>Error</value>
   </data>
   <data name="InactiveAppErrorMessage" xml:space="preserve">
-    <value>Application is not active</value>
+    <value>La aplicación no está activa</value>
   </data>
   <data name="OutOfDateAppErrorMessage" xml:space="preserve">
-    <value>Application is out of date</value>
+    <value>Es necesaria una actualización de la aplicación</value>
   </data>
 </root>

@@ -79,7 +79,7 @@ namespace Risk.Maui.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to La aplicación no está activa.
+        ///   Looks up a localized string similar to Application is not active.
         /// </summary>
         internal static string InactiveAppErrorMessage {
             get {
@@ -88,7 +88,7 @@ namespace Risk.Maui.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Es necesaria una actualización de la aplicación.
+        ///   Looks up a localized string similar to Application is out of date.
         /// </summary>
         internal static string OutOfDateAppErrorMessage {
             get {
