@@ -1,5 +1,7 @@
 ﻿using Risk.Maui.Services.AppEnvironment;
 using Risk.Maui.Services.Dialog;
+using Risk.Maui.Services.Navigation;
+using Risk.Maui.Services.OpenUrl;
 using Risk.Maui.Services.Settings;
 
 namespace Risk.Maui;
@@ -30,7 +32,9 @@ public static class MauiProgram
     public static MauiAppBuilder RegisterAppServices(this MauiAppBuilder mauiAppBuilder)
     {
         mauiAppBuilder.Services.AddSingleton<ISettingsService, SettingsService>();
+        mauiAppBuilder.Services.AddSingleton<INavigationService, MauiNavigationService>();
         mauiAppBuilder.Services.AddSingleton<IDialogService, DialogService>();
+        mauiAppBuilder.Services.AddSingleton<IOpenUrlService, OpenUrlService>();
 
         mauiAppBuilder.Services.AddSingleton<IAppEnvironmentService, AppEnvironmentService>(
         serviceProvider =>
