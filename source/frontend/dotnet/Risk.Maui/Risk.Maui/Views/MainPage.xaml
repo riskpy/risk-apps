@@ -5,4 +5,19 @@
 			 x:Class="Risk.Maui.Views.MainPage"
 			 x:DataType="vm:MainViewModel">
 
+    <VerticalStackLayout
+			Spacing="25"
+			Padding="30,0"
+			VerticalOptions="Center">
+
+        
+
+        <Button
+				Text="Abrir"
+				SemanticProperties.Hint="Counts the number of times you click"
+				Command="{Binding OpenLoadingCommand}"
+				HorizontalOptions="Center" />
+
+    </VerticalStackLayout>
+
 </ContentPage>
