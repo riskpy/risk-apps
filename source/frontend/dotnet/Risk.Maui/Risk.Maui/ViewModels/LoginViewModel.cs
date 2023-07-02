@@ -11,9 +11,7 @@ namespace Risk.Maui.ViewModels;
 
 public partial class LoginViewModel : ViewModelBase
 {
-    private readonly ISettingsService _settingsService;
     private readonly IAppEnvironmentService _appEnvironmentService;
-    private readonly IDialogService _dialogService;
 
     [ObservableProperty]
     private ValidatableObject<string> _usuario = new();
@@ -24,11 +22,9 @@ public partial class LoginViewModel : ViewModelBase
     [ObservableProperty]
     private bool _isValid;
 
-    public LoginViewModel(ISettingsService settingsService, IAppEnvironmentService appEnvironmentService, IDialogService dialogService, INavigationService navigationService) : base(navigationService)
+    public LoginViewModel(ISettingsService settingsService, INavigationService navigationService, IDialogService dialogService, IAppEnvironmentService appEnvironmentService) : base(settingsService, navigationService, dialogService)
     {
-        _settingsService = settingsService;
         _appEnvironmentService = appEnvironmentService;
-        _dialogService = dialogService;
 
         AddValidations();
     }
@@ -36,7 +32,7 @@ public partial class LoginViewModel : ViewModelBase
     [RelayCommand]
     private async Task OpenLoading()
     {
-        var pop = await _dialogService.ShowLoadingAsync("Cargando");
+        var pop = await DialogService.ShowLoadingAsync("Cargando");
         await Task.Delay(5000);
         pop.Close();
     }
@@ -50,8 +46,8 @@ public partial class LoginViewModel : ViewModelBase
     [RelayCommand]
     private async Task SignInAsync()
     {
-        var pop = await _dialogService.ShowLoadingAsync("Cargando");
-        SesionRespuesta sesionRespuesta = await _appEnvironmentService.AutApi.IniciarSesionAsync(_settingsService.DeviceToken, null, new IniciarSesionRequestBody
+        var pop = await DialogService.ShowLoadingAsync("Cargando");
+        SesionRespuesta sesionRespuesta = await _appEnvironmentService.AutApi.IniciarSesionAsync(SettingsService.DeviceToken, null, new IniciarSesionRequestBody
         {
             Usuario = Usuario.Value,
             Clave = Clave.Value
@@ -60,18 +56,17 @@ public partial class LoginViewModel : ViewModelBase
 
         if (sesionRespuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
         {
-            _settingsService.AccessToken = sesionRespuesta.Datos.AccessToken;
-            _settingsService.RefreshToken = sesionRespuesta.Datos.RefreshToken;
+            SettingsService.AccessToken = sesionRespuesta.Datos.AccessToken;
+            SettingsService.RefreshToken = sesionRespuesta.Datos.RefreshToken;
+            SettingsService.IsUserLoggedIn = true;
 
             _appEnvironmentService.UpdateDependencies(sesionRespuesta.Datos.AccessToken);
-
-            _settingsService.IsUserLoggedIn = true;
 
             await NavigationService.NavigateToAsync("//MainPage");
         }
         else
         {
-            await _dialogService.ShowAlertAsync(sesionRespuesta.Mensaje, "Error", "Ok");
+            await DialogService.ShowAlertAsync(sesionRespuesta.Mensaje, "Error", "Ok");
         }
     }
 

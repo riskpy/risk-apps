@@ -1,4 +1,6 @@
-﻿using Risk.Maui.Services.Navigation;
+﻿using Risk.Maui.Services.Dialog;
+using Risk.Maui.Services.Navigation;
+using Risk.Maui.Services.Settings;
 
 namespace Risk.Maui.ViewModels.Base;
 
@@ -11,13 +13,19 @@ public abstract partial class ViewModelBase : ObservableObject, IViewModelBase
     [ObservableProperty]
     private bool _isInitialized;
 
+    public ISettingsService SettingsService { get; }
+
     public INavigationService NavigationService { get; }
+
+    public IDialogService DialogService { get; }
 
     public IAsyncRelayCommand InitializeAsyncCommand { get; }
 
-    public ViewModelBase(INavigationService navigationService)
+    public ViewModelBase(ISettingsService settingsService, INavigationService navigationService, IDialogService dialogService)
     {
+        SettingsService = settingsService;
         NavigationService = navigationService;
+        DialogService = dialogService;
 
         InitializeAsyncCommand =
             new AsyncRelayCommand(

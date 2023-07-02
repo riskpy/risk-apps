@@ -11,58 +11,58 @@ namespace Risk.Maui.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
-    private readonly ISettingsService _settingsService;
     private readonly IAppEnvironmentService _appEnvironmentService;
-    private readonly IDialogService _dialogService;
 
-    public MainViewModel(ISettingsService settingsService, IAppEnvironmentService appEnvironmentService, IDialogService dialogService, INavigationService navigationService) : base(navigationService)
+    public MainViewModel(ISettingsService settingsService, INavigationService navigationService, IDialogService dialogService, IAppEnvironmentService appEnvironmentService) : base(settingsService, navigationService, dialogService)
     {
-        _settingsService = settingsService;
         _appEnvironmentService = appEnvironmentService;
-        _dialogService = dialogService;
     }
 
     [RelayCommand]
     private async Task SignOutAsync()
     {
-        var pop = await _dialogService.ShowLoadingAsync("Cargando");
+        var pop = await DialogService.ShowLoadingAsync("Cargando");
 
         DatoRespuesta respuestaFinalizarSesion = null;
         try
         {
-            respuestaFinalizarSesion = await _appEnvironmentService.AutApi.FinalizarSesionAsync(_settingsService.DeviceToken, null, new FinalizarSesionRequestBody { AccessToken = _settingsService.AccessToken });
+            respuestaFinalizarSesion = await _appEnvironmentService.AutApi.FinalizarSesionAsync(SettingsService.DeviceToken, null, new FinalizarSesionRequestBody { AccessToken = SettingsService.AccessToken });
 
             if (respuestaFinalizarSesion.Codigo.Equals(RiskConstants.CODIGO_OK))
             {
-                _settingsService.AccessToken = string.Empty;
-                _settingsService.RefreshToken = string.Empty;
-                _settingsService.IsUserLoggedIn = false;
+                SettingsService.AccessToken = string.Empty;
+                SettingsService.RefreshToken = string.Empty;
+                SettingsService.IsUserLoggedIn = false;
+
+                _appEnvironmentService.UpdateDependencies(string.Empty);
 
                 await NavigationService.NavigateToAsync("//LoginPage");
             }
             else
             {
-                await _dialogService.ShowAlertAsync("Error al finalizar sesión", "Error", "Ok");
+                await DialogService.ShowAlertAsync("Error al finalizar sesión", "Error", "Ok");
             }
         }
         catch (ApiException ex)
         {
             if (ex.ErrorCode.Equals(401))
             {
-                _settingsService.AccessToken = string.Empty;
-                _settingsService.RefreshToken = string.Empty;
-                _settingsService.IsUserLoggedIn = false;
+                SettingsService.AccessToken = string.Empty;
+                SettingsService.RefreshToken = string.Empty;
+                SettingsService.IsUserLoggedIn = false;
+
+                _appEnvironmentService.UpdateDependencies(string.Empty);
 
                 await NavigationService.NavigateToAsync("//LoginPage");
             }
             else
             {
-                await _dialogService.ShowAlertAsync("Error al finalizar sesión", "Error", "Ok");
+                await DialogService.ShowAlertAsync("Error al finalizar sesión", "Error", "Ok");
             }
         }
         catch (Exception ex)
         {
-            await _dialogService.ShowAlertAsync("Error al finalizar sesión", "Error", "Ok");
+            await DialogService.ShowAlertAsync("Error al finalizar sesión", "Error", "Ok");
         }
 
         pop.Close();
