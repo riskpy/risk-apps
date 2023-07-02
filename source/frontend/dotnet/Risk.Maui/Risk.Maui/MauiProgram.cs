@@ -55,6 +55,7 @@ public static class MauiProgram
     {
         mauiAppBuilder.Services.AddSingleton<MainViewModel>();
         mauiAppBuilder.Services.AddSingleton<SampleViewModel>();
+        mauiAppBuilder.Services.AddSingleton<LoginViewModel>();
 
         return mauiAppBuilder;
     }
@@ -63,6 +64,7 @@ public static class MauiProgram
     {
         mauiAppBuilder.Services.AddSingleton<MainPage>();
         mauiAppBuilder.Services.AddSingleton<SamplePage>();
+        mauiAppBuilder.Services.AddSingleton<LoginPage>();
 
         return mauiAppBuilder;
     }

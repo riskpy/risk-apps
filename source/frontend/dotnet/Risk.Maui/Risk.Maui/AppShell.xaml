@@ -1,21 +1,27 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
-	x:Class="Risk.Maui.AppShell"
-	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-	xmlns:views="clr-namespace:Risk.Maui.Views"
-	xmlns:local="clr-namespace:Risk.Maui">
+    x:Class="Risk.Maui.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Risk.Maui"
+    xmlns:views="clr-namespace:Risk.Maui.Views">
 
-	<ShellContent
-		Shell.NavBarIsVisible="true"
-		Title="Main"
-		Icon="iconblank.png"
-		ContentTemplate="{DataTemplate views:MainPage}"
-		Route="MainPage" />
-	<ShellContent
-		Shell.NavBarIsVisible="true"
-		Title="Sample"
-		Icon="iconsample.png"
-		ContentTemplate="{DataTemplate views:SamplePage}"
-		Route="SamplePage" />
+    <ShellContent
+        Title="Main"
+        ContentTemplate="{DataTemplate views:MainPage}"
+        Icon="iconblank.png"
+        Route="MainPage"
+        Shell.NavBarIsVisible="true" />
+    <ShellContent
+        Title="Sample"
+        ContentTemplate="{DataTemplate views:SamplePage}"
+        Icon="iconsample.png"
+        Route="SamplePage"
+        Shell.NavBarIsVisible="true" />
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Icon="iconsample.png"
+        Route="LoginPage"
+        Shell.NavBarIsVisible="true" />
 </Shell>

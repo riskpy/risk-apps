@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Risk.Maui.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:Risk.Maui.ViewModels"
+    Title="LoginPage"
+    x:DataType="vm:LoginViewModel">
+    <VerticalStackLayout>
+        <Label
+            HorizontalOptions="Center"
+            Text="User name or email"
+            VerticalOptions="Center" />
+        <Entry
+            HorizontalOptions="Center"
+            Text="{Binding Usuario.Value, Mode=TwoWay}"
+            VerticalOptions="Center"
+            WidthRequest="200">
+            <Entry.Behaviors>
+                <mct:EventToCommandBehavior Command="{Binding ValidateCommand}" EventName="TextChanged" />
+            </Entry.Behaviors>
+            <Entry.Triggers>
+                <DataTrigger
+                    Binding="{Binding Usuario.IsValid}"
+                    TargetType="Entry"
+                    Value="False">
+                    <Setter Property="BackgroundColor" Value="Red" />
+                </DataTrigger>
+            </Entry.Triggers>
+        </Entry>
+        <Label
+            HorizontalOptions="Center"
+            Text="Errors"
+            VerticalOptions="Center" />
+
+        <Label
+            HorizontalOptions="Center"
+            Text="Password"
+            VerticalOptions="Center" />
+        <Entry
+            HorizontalOptions="Center"
+            IsPassword="True"
+            Text="{Binding Clave.Value, Mode=TwoWay}"
+            VerticalOptions="Center"
+            WidthRequest="200">
+            <Entry.Behaviors>
+                <mct:EventToCommandBehavior Command="{Binding ValidateCommand}" EventName="TextChanged" />
+            </Entry.Behaviors>
+            <Entry.Triggers>
+                <DataTrigger
+                    Binding="{Binding Clave.IsValid}"
+                    TargetType="Entry"
+                    Value="False">
+                    <Setter Property="BackgroundColor" Value="Red" />
+                </DataTrigger>
+            </Entry.Triggers>
+        </Entry>
+        <Label
+            HorizontalOptions="Center"
+            Text="Errors"
+            VerticalOptions="Center" />
+
+        <Button
+            Command="{Binding SignInCommand}"
+            Text="Login"
+            WidthRequest="150" />
+    </VerticalStackLayout>
+</ContentPage>
