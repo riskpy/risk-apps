@@ -67,6 +67,16 @@ namespace Risk.Maui.Services.AppEnvironment
 
             UpdateDependencies(config);
         }
+
+        public void UpdateDependencies(string accessToken)
+        {
+            Configuration config = (Configuration)_autApi.Configuration;
+
+            // Configure Bearer token for authorization: AccessToken
+            config.AccessToken = accessToken;
+
+            UpdateDependencies(config);
+        }
     }
 }
 
