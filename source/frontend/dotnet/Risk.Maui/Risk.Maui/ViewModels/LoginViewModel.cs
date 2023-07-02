@@ -5,15 +5,15 @@ using Risk.Maui.Services.Dialog;
 using Risk.Maui.Services.Navigation;
 using Risk.Maui.Services.Settings;
 using Risk.Maui.Validations;
+using Risk.Maui.ViewModels.Base;
 
 namespace Risk.Maui.ViewModels;
 
-public partial class LoginViewModel : BaseViewModel
+public partial class LoginViewModel : ViewModelBase
 {
     private readonly ISettingsService _settingsService;
     private readonly IAppEnvironmentService _appEnvironmentService;
     private readonly IDialogService _dialogService;
-    private readonly INavigationService _navigationService;
 
     [ObservableProperty]
     private ValidatableObject<string> _usuario = new();
@@ -24,12 +24,11 @@ public partial class LoginViewModel : BaseViewModel
     [ObservableProperty]
     private bool _isValid;
 
-    public LoginViewModel(ISettingsService settingsService, IAppEnvironmentService appEnvironmentService, IDialogService dialogService, INavigationService navigationService)
+    public LoginViewModel(ISettingsService settingsService, IAppEnvironmentService appEnvironmentService, IDialogService dialogService, INavigationService navigationService) : base(navigationService)
     {
         _settingsService = settingsService;
         _appEnvironmentService = appEnvironmentService;
         _dialogService = dialogService;
-        _navigationService = navigationService;
 
         AddValidations();
     }
@@ -68,7 +67,7 @@ public partial class LoginViewModel : BaseViewModel
 
             _settingsService.IsUserLoggedIn = true;
 
-            await _navigationService.NavigateToAsync("//MainPage");
+            await NavigationService.NavigateToAsync("//MainPage");
         }
         else
         {
