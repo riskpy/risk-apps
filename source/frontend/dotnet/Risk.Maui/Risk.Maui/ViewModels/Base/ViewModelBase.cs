@@ -51,6 +51,8 @@ public abstract partial class ViewModelBase : ObservableObject, IViewModelBase
         Interlocked.Increment(ref _isBusy);
         OnPropertyChanged(nameof(IsBusy));
 
+        var pop = await DialogService.ShowLoadingAsync("Cargando");
+
         try
         {
             await unitOfWork();
@@ -59,6 +61,8 @@ public abstract partial class ViewModelBase : ObservableObject, IViewModelBase
         {
             Interlocked.Decrement(ref _isBusy);
             OnPropertyChanged(nameof(IsBusy));
+
+            pop.Close();
         }
     }
 }

@@ -21,50 +21,50 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private async Task SignOutAsync()
     {
-        var pop = await DialogService.ShowLoadingAsync("Cargando");
+        await IsBusyFor(
+           async () =>
+           {
+               DatoRespuesta respuestaFinalizarSesion = null;
+               try
+               {
+                   respuestaFinalizarSesion = await _appEnvironmentService.AutApi.FinalizarSesionAsync(SettingsService.DeviceToken, null, new FinalizarSesionRequestBody { AccessToken = SettingsService.AccessToken });
 
-        DatoRespuesta respuestaFinalizarSesion = null;
-        try
-        {
-            respuestaFinalizarSesion = await _appEnvironmentService.AutApi.FinalizarSesionAsync(SettingsService.DeviceToken, null, new FinalizarSesionRequestBody { AccessToken = SettingsService.AccessToken });
+                   if (respuestaFinalizarSesion.Codigo.Equals(RiskConstants.CODIGO_OK))
+                   {
+                       SettingsService.AccessToken = string.Empty;
+                       SettingsService.RefreshToken = string.Empty;
+                       SettingsService.IsUserLoggedIn = false;
 
-            if (respuestaFinalizarSesion.Codigo.Equals(RiskConstants.CODIGO_OK))
-            {
-                SettingsService.AccessToken = string.Empty;
-                SettingsService.RefreshToken = string.Empty;
-                SettingsService.IsUserLoggedIn = false;
+                       _appEnvironmentService.UpdateDependencies(string.Empty);
 
-                _appEnvironmentService.UpdateDependencies(string.Empty);
+                       await NavigationService.NavigateToAsync("//LoginPage");
+                   }
+                   else
+                   {
+                       await DialogService.ShowAlertAsync("Error al finalizar sesión");
+                   }
+               }
+               catch (ApiException ex)
+               {
+                   if (ex.ErrorCode.Equals(401))
+                   {
+                       SettingsService.AccessToken = string.Empty;
+                       SettingsService.RefreshToken = string.Empty;
+                       SettingsService.IsUserLoggedIn = false;
 
-                await NavigationService.NavigateToAsync("//LoginPage");
-            }
-            else
-            {
-                await DialogService.ShowAlertAsync("Error al finalizar sesión", "Error", "Ok");
-            }
-        }
-        catch (ApiException ex)
-        {
-            if (ex.ErrorCode.Equals(401))
-            {
-                SettingsService.AccessToken = string.Empty;
-                SettingsService.RefreshToken = string.Empty;
-                SettingsService.IsUserLoggedIn = false;
+                       _appEnvironmentService.UpdateDependencies(string.Empty);
 
-                _appEnvironmentService.UpdateDependencies(string.Empty);
-
-                await NavigationService.NavigateToAsync("//LoginPage");
-            }
-            else
-            {
-                await DialogService.ShowAlertAsync("Error al finalizar sesión", "Error", "Ok");
-            }
-        }
-        catch (Exception ex)
-        {
-            await DialogService.ShowAlertAsync("Error al finalizar sesión", "Error", "Ok");
-        }
-
-        pop.Close();
+                       await NavigationService.NavigateToAsync("//LoginPage");
+                   }
+                   else
+                   {
+                       await DialogService.ShowAlertAsync("Error al finalizar sesión");
+                   }
+               }
+               catch (Exception ex)
+               {
+                   await DialogService.ShowAlertAsync("Error al finalizar sesión");
+               }
+           });
     }
 }

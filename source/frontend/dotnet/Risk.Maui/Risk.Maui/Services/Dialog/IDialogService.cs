@@ -2,7 +2,7 @@
 {
     public interface IDialogService
     {
-        Task ShowAlertAsync(string message, string title, string buttonLabel);
+        Task ShowAlertAsync(string message, string title = default(string), string buttonLabel = default(string));
         Task<SpinnerPopup> ShowLoadingAsync(string message);
     }
 }

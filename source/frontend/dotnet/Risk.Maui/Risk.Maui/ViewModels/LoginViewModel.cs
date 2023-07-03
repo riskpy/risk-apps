@@ -30,14 +30,6 @@ public partial class LoginViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task OpenLoading()
-    {
-        var pop = await DialogService.ShowLoadingAsync("Cargando");
-        await Task.Delay(5000);
-        pop.Close();
-    }
-
-    [RelayCommand]
     private void Validate()
     {
         IsValid = Usuario.Validate() && Clave.Validate();
@@ -46,28 +38,30 @@ public partial class LoginViewModel : ViewModelBase
     [RelayCommand]
     private async Task SignInAsync()
     {
-        var pop = await DialogService.ShowLoadingAsync("Cargando");
-        SesionRespuesta sesionRespuesta = await _appEnvironmentService.AutApi.IniciarSesionAsync(SettingsService.DeviceToken, null, new IniciarSesionRequestBody
-        {
-            Usuario = Usuario.Value,
-            Clave = Clave.Value
-        });
-        pop.Close();
+        await IsBusyFor(
+           async () =>
+           {
+               SesionRespuesta sesionRespuesta = await _appEnvironmentService.AutApi.IniciarSesionAsync(SettingsService.DeviceToken, null, new IniciarSesionRequestBody
+               {
+                   Usuario = Usuario.Value,
+                   Clave = Clave.Value
+               });
 
-        if (sesionRespuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
-        {
-            SettingsService.AccessToken = sesionRespuesta.Datos.AccessToken;
-            SettingsService.RefreshToken = sesionRespuesta.Datos.RefreshToken;
-            SettingsService.IsUserLoggedIn = true;
+               if (sesionRespuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
+               {
+                   SettingsService.AccessToken = sesionRespuesta.Datos.AccessToken;
+                   SettingsService.RefreshToken = sesionRespuesta.Datos.RefreshToken;
+                   SettingsService.IsUserLoggedIn = true;
 
-            _appEnvironmentService.UpdateDependencies(sesionRespuesta.Datos.AccessToken);
+                   _appEnvironmentService.UpdateDependencies(sesionRespuesta.Datos.AccessToken);
 
-            await NavigationService.NavigateToAsync("//MainPage");
-        }
-        else
-        {
-            await DialogService.ShowAlertAsync(sesionRespuesta.Mensaje, "Error", "Ok");
-        }
+                   await NavigationService.NavigateToAsync("//MainPage");
+               }
+               else
+               {
+                   await DialogService.ShowAlertAsync(sesionRespuesta.Mensaje);
+               }
+           });
     }
 
     private void AddValidations()

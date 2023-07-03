@@ -1,22 +1,38 @@
-﻿namespace Risk.Maui.ViewModels;
+﻿using Risk.Maui.Services.Dialog;
+using Risk.Maui.Services.Navigation;
+using Risk.Maui.Services.Settings;
+using Risk.Maui.ViewModels.Base;
 
-public partial class SampleViewModel : BaseViewModel
+namespace Risk.Maui.ViewModels;
+
+public partial class SampleViewModel : ViewModelBase
 {
-	int count = 0;
+    int count = 0;
 
-	[ObservableProperty]
-	public string message = "Click me";
+    [ObservableProperty]
+    public string message = "Click me";
 
-	[RelayCommand]
-	private void OnCounterClicked()
-	{
-		count++;
+    public SampleViewModel(ISettingsService settingsService, INavigationService navigationService, IDialogService dialogService) : base(settingsService, navigationService, dialogService)
+    {
+    }
 
-		if (count == 1)
-			Message = $"Clicked {count} time";
-		else
-			Message = $"Clicked {count} times";
+    [RelayCommand]
+    private async Task OnCounterClicked()
+    {
+        await IsBusyFor(
+           async () =>
+           {
+               await Task.Delay(5000);
+           });
 
-		SemanticScreenReader.Announce(Message);
-	}
+
+        count++;
+
+        if (count == 1)
+            Message = $"Clicked {count} time";
+        else
+            Message = $"Clicked {count} times";
+
+        SemanticScreenReader.Announce(Message);
+    }
 }

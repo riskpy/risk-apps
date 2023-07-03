@@ -35,7 +35,7 @@ public partial class App : Application
         var error = await CheckAppVersion();
         if (!string.IsNullOrEmpty(error))
         {
-            await _dialogService.ShowAlertAsync(error, AppResources.AlertDefaultTitle, AppResources.AlertDefaultButtonLabel);
+            await _dialogService.ShowAlertAsync(error);
             Quit();
         }
         await RegisterDevice();
