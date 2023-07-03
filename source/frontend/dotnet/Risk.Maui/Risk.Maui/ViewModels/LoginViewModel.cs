@@ -38,30 +38,32 @@ public partial class LoginViewModel : ViewModelBase
     [RelayCommand]
     private async Task SignInAsync()
     {
+        SesionRespuesta sesionRespuesta = null;
+
         await IsBusyFor(
            async () =>
            {
-               SesionRespuesta sesionRespuesta = await _appEnvironmentService.AutApi.IniciarSesionAsync(SettingsService.DeviceToken, null, new IniciarSesionRequestBody
+               sesionRespuesta = await _appEnvironmentService.AutApi.IniciarSesionAsync(SettingsService.DeviceToken, null, new IniciarSesionRequestBody
                {
                    Usuario = Usuario.Value,
                    Clave = Clave.Value
                });
-
-               if (sesionRespuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
-               {
-                   SettingsService.AccessToken = sesionRespuesta.Datos.AccessToken;
-                   SettingsService.RefreshToken = sesionRespuesta.Datos.RefreshToken;
-                   SettingsService.IsUserLoggedIn = true;
-
-                   _appEnvironmentService.UpdateDependencies(sesionRespuesta.Datos.AccessToken);
-
-                   await NavigationService.NavigateToAsync("//MainPage");
-               }
-               else
-               {
-                   await DialogService.ShowAlertAsync(sesionRespuesta.Mensaje);
-               }
            });
+
+        if (sesionRespuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
+        {
+            SettingsService.AccessToken = sesionRespuesta.Datos.AccessToken;
+            SettingsService.RefreshToken = sesionRespuesta.Datos.RefreshToken;
+            SettingsService.IsUserLoggedIn = true;
+
+            _appEnvironmentService.UpdateDependencies(sesionRespuesta.Datos.AccessToken);
+
+            await NavigationService.NavigateToAsync("//MainPage");
+        }
+        else
+        {
+            await DialogService.ShowAlertAsync(sesionRespuesta.Mensaje);
+        }
     }
 
     private void AddValidations()
