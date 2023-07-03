@@ -3,6 +3,7 @@ using Risk.Common.Helpers;
 using Risk.Maui.Resources.Languages;
 using Risk.Maui.Services.AppEnvironment;
 using Risk.Maui.Services.Dialog;
+using Risk.Maui.Services.Navigation;
 using Risk.Maui.Services.Settings;
 
 namespace Risk.Maui;
@@ -10,12 +11,14 @@ namespace Risk.Maui;
 public partial class App : Application
 {
     private readonly ISettingsService _settingsService;
-    private readonly IAppEnvironmentService _appEnvironmentService;
+    private readonly INavigationService _navigationService;
     private readonly IDialogService _dialogService;
+    private readonly IAppEnvironmentService _appEnvironmentService;
 
-    public App(ISettingsService settingsService, IAppEnvironmentService appEnvironmentService, IDialogService dialogService)
+    public App(ISettingsService settingsService, INavigationService navigationService, IDialogService dialogService, IAppEnvironmentService appEnvironmentService)
     {
         _settingsService = settingsService;
+        _navigationService = navigationService;
         _appEnvironmentService = appEnvironmentService;
         _dialogService = dialogService;
 
@@ -23,7 +26,7 @@ public partial class App : Application
 
         InitApp();
 
-        MainPage = new AppShell();
+        MainPage = new AppShell(navigationService);
     }
 
     private void InitApp()

@@ -1,10 +1,12 @@
-﻿namespace Risk.Maui.Views;
+﻿using Risk.Maui.Views.Base;
 
-public partial class MainPage : ContentPage
+namespace Risk.Maui.Views;
+
+public partial class MainPage : ContentPageBase
 {
-	public MainPage(MainViewModel viewModel)
-	{
-		InitializeComponent();
-		BindingContext = viewModel;
-	}
+    public MainPage(MainViewModel viewModel)
+    {
+        BindingContext = viewModel;
+        InitializeComponent();
+    }
 }

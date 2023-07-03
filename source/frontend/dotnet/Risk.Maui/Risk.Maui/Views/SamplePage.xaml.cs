@@ -2,9 +2,9 @@
 
 public partial class SamplePage : ContentPage
 {
-	public SamplePage(SampleViewModel viewModel)
-	{
-		InitializeComponent();
-		BindingContext = viewModel;
-	}
+    public SamplePage(SampleViewModel viewModel)
+    {
+        BindingContext = viewModel;
+        InitializeComponent();
+    }
 }

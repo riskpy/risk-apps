@@ -1,4 +1,5 @@
-﻿using Risk.Maui.Services.Dialog;
+﻿using CommunityToolkit.Maui.Views;
+using Risk.Maui.Services.Dialog;
 using Risk.Maui.Services.Navigation;
 using Risk.Maui.Services.Settings;
 
@@ -46,12 +47,16 @@ public abstract partial class ViewModelBase : ObservableObject, IViewModelBase
         return Task.CompletedTask;
     }
 
-    public async Task IsBusyFor(Func<Task> unitOfWork)
+    public async Task IsBusyFor(Func<Task> unitOfWork, bool showLoading = false)
     {
         Interlocked.Increment(ref _isBusy);
         OnPropertyChanged(nameof(IsBusy));
 
-        var pop = await DialogService.ShowLoadingAsync("Cargando");
+        Popup pop = null;
+        if (showLoading)
+        {
+            pop = await DialogService.ShowLoadingAsync("Cargando");
+        }
 
         try
         {
@@ -62,7 +67,10 @@ public abstract partial class ViewModelBase : ObservableObject, IViewModelBase
             Interlocked.Decrement(ref _isBusy);
             OnPropertyChanged(nameof(IsBusy));
 
-            pop.Close();
+            if (showLoading && pop != null)
+            {
+                pop.Close();
+            }
         }
     }
 }

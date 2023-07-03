@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<views:ContentPageBase
     x:Class="Risk.Maui.Views.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:Risk.Maui.Views.Base"
     xmlns:vm="clr-namespace:Risk.Maui.ViewModels"
     x:DataType="vm:MainViewModel">
 
@@ -21,4 +22,4 @@
 
     </VerticalStackLayout>
 
-</ContentPage>
+</views:ContentPageBase>
