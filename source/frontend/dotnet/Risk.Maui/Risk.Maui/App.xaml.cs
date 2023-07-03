@@ -35,12 +35,20 @@ public partial class App : Application
 
     protected override async void OnStart()
     {
-        var error = await CheckAppVersion();
+        string error = await CheckApiConnection();
         if (!string.IsNullOrEmpty(error))
         {
             await _dialogService.ShowAlertAsync(error);
             Quit();
         }
+
+        error = await CheckAppVersion();
+        if (!string.IsNullOrEmpty(error))
+        {
+            await _dialogService.ShowAlertAsync(error);
+            Quit();
+        }
+
         await RegisterDevice();
 
         var status = await CheckAndRequestLocationPermission();
@@ -63,6 +71,30 @@ public partial class App : Application
     protected override void OnResume()
     {
         base.OnResume();
+    }
+
+    private async Task<string> CheckApiConnection()
+    {
+        string error = string.Empty;
+
+        DatoRespuesta datoRespuesta;
+        try
+        {
+            datoRespuesta = await _appEnvironmentService.GenApi.VersionSistemaAsync();
+        }
+        catch (Exception)
+        {
+            error = AppResources.ApiConnectionErrorMessage;
+            return error;
+        }
+
+        if (datoRespuesta == null || !datoRespuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
+        {
+            error = AppResources.ApiConnectionErrorMessage;
+            return error;
+        }
+
+        return error;
     }
 
     private async Task<string> CheckAppVersion()

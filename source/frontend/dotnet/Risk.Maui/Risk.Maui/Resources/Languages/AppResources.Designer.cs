@@ -79,6 +79,15 @@ namespace Risk.Maui.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Server connection error.
+        /// </summary>
+        internal static string ApiConnectionErrorMessage {
+            get {
+                return ResourceManager.GetString("ApiConnectionErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application is not active.
         /// </summary>
         internal static string InactiveAppErrorMessage {

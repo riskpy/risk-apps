@@ -123,6 +123,9 @@
   <data name="AlertDefaultTitle" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="ApiConnectionErrorMessage" xml:space="preserve">
+    <value>Server connection error</value>
+  </data>
   <data name="InactiveAppErrorMessage" xml:space="preserve">
     <value>Application is not active</value>
   </data>
