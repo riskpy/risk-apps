@@ -18,10 +18,8 @@
         Icon="iconsample.png"
         Route="SamplePage"
         Shell.NavBarIsVisible="true" />
-    <ShellContent
-        Title="Login"
-        ContentTemplate="{DataTemplate views:LoginPage}"
-        Icon="iconsample.png"
-        Route="LoginPage"
-        Shell.NavBarIsVisible="true" />
+
+    <ShellItem Route="LoginPage">
+        <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" />
+    </ShellItem>
 </Shell>

@@ -11,15 +11,10 @@
         Padding="30,0"
         Spacing="25"
         VerticalOptions="Center">
-
-
-
         <Button
             Command="{Binding SignOutCommand}"
             HorizontalOptions="Center"
-            SemanticProperties.Hint="Counts the number of times you click"
             Text="Logout" />
-
     </VerticalStackLayout>
 
 </views:ContentPageBase>
