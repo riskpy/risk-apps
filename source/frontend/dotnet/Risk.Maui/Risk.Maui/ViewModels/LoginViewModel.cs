@@ -48,7 +48,7 @@ public partial class LoginViewModel : ViewModelBase
                    Usuario = Usuario.Value,
                    Clave = Clave.Value
                });
-           });
+           }, true);
 
         if (sesionRespuesta.Codigo.Equals(RiskConstants.CODIGO_OK))
         {

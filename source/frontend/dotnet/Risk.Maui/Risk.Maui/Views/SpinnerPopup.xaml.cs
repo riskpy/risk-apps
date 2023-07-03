@@ -4,8 +4,11 @@ namespace Risk.Maui.Views;
 
 public partial class SpinnerPopup : Popup
 {
-    public SpinnerPopup()
+    public string Message { get; set; }
+
+    public SpinnerPopup(string message)
     {
+        Message = message;
         InitializeComponent();
     }
 }

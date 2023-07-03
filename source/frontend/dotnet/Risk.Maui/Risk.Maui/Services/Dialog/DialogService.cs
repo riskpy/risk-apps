@@ -10,9 +10,9 @@ namespace Risk.Maui.Services.Dialog
             return Application.Current.MainPage.DisplayAlert(string.IsNullOrEmpty(title) ? AppResources.AlertDefaultTitle : title, message, string.IsNullOrEmpty(buttonLabel) ? AppResources.AlertDefaultButtonLabel : buttonLabel);
         }
 
-        public Task<SpinnerPopup> ShowLoadingAsync(string message)
+        public Task<SpinnerPopup> ShowLoadingAsync(string message = default(string))
         {
-            var popup = new SpinnerPopup();
+            var popup = new SpinnerPopup(string.IsNullOrEmpty(message) ? AppResources.LoadingDefaultMessage : message);
             Application.Current.MainPage.ShowPopup(popup);
             return Task.FromResult(popup);
         }

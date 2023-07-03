@@ -23,7 +23,7 @@ public partial class SampleViewModel : ViewModelBase
            async () =>
            {
                await Task.Delay(5000);
-           });
+           }, true);
 
 
         count++;

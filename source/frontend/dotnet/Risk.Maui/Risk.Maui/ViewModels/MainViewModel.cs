@@ -65,6 +65,6 @@ public partial class MainViewModel : ViewModelBase
                {
                    await DialogService.ShowAlertAsync("Error al finalizar sesión");
                }
-           });
+           }, true);
     }
 }

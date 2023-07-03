@@ -88,6 +88,15 @@ namespace Risk.Maui.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        internal static string LoadingDefaultMessage {
+            get {
+                return ResourceManager.GetString("LoadingDefaultMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application is out of date.
         /// </summary>
         internal static string OutOfDateAppErrorMessage {

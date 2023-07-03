@@ -55,7 +55,7 @@ public abstract partial class ViewModelBase : ObservableObject, IViewModelBase
         Popup pop = null;
         if (showLoading)
         {
-            pop = await DialogService.ShowLoadingAsync("Cargando");
+            pop = await DialogService.ShowLoadingAsync();
         }
 
         try

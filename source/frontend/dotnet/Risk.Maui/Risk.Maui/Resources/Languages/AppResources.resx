@@ -126,6 +126,9 @@
   <data name="InactiveAppErrorMessage" xml:space="preserve">
     <value>Application is not active</value>
   </data>
+  <data name="LoadingDefaultMessage" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
   <data name="OutOfDateAppErrorMessage" xml:space="preserve">
     <value>Application is out of date</value>
   </data>
