@@ -43,7 +43,7 @@ public static class MauiProgram
 
             var aes = new AppEnvironmentService(settingsService.ApiBasePath,
                 settingsService.ApiKey,
-                string.Empty);
+                settingsService.AccessToken);
 
             return aes;
         });
