@@ -40,6 +40,8 @@ public static class MauiProgram
         serviceProvider =>
         {
             var settingsService = serviceProvider.GetService<ISettingsService>();
+            settingsService.ApiBasePath = GlobalSettings.Instance.ApiBasePath;
+            settingsService.ApiKey = GlobalSettings.Instance.ApiKey;
 
             var aes = new AppEnvironmentService(settingsService.ApiBasePath,
                 settingsService.ApiKey,
