@@ -69,7 +69,7 @@ public abstract partial class ViewModelBase : ObservableObject, IViewModelBase
 
             if (showLoading && pop != null)
             {
-                pop.Close();
+                await pop.CloseAsync();
             }
         }
     }
