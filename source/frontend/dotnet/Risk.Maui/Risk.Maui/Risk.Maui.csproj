@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
+		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
 		<OutputType>Exe</OutputType>
 		<RootNamespace>Risk.Maui</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -46,8 +46,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="CommunityToolkit.Maui" Version="6.0.0" />
-	  <PackageReference Include="CommunityToolkit.MVVM" Version="8.2.1" />
+	  <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
+	  <PackageReference Include="CommunityToolkit.MVVM" Version="8.2.2" />
 	</ItemGroup>
 
 	<ItemGroup>
