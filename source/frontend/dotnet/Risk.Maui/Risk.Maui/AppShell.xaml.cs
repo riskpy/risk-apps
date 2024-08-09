@@ -26,6 +26,10 @@ public partial class AppShell : Shell
 
     private static void InitializeRouting()
     {
+        foreach (var route in Routes.RouteTypeMap)
+        {
+            Routing.RegisterRoute(route.Key, route.Value);
+        }
         //Routing.RegisterRoute("Filter", typeof(FiltersView));
     }
 }

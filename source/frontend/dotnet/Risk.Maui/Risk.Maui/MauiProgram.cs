@@ -3,9 +3,11 @@ using Risk.Maui.Services.Dialog;
 using Risk.Maui.Services.Navigation;
 using Risk.Maui.Services.OpenUrl;
 using Risk.Maui.Services.Settings;
+using epj.RouteGenerator;
 
 namespace Risk.Maui;
 
+[AutoRoutes("Page")]
 public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()

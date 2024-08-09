@@ -13,8 +13,8 @@ namespace Risk.Maui.Services.Navigation
 
         public Task InitializeAsync() =>
             NavigateToAsync(string.IsNullOrEmpty(_settingsService.AccessToken)
-                ? "//LoginPage"
-                : "//MainPage");
+                ? $"//{Routes.LoginPage}"
+                : $"//{Routes.MainPage}");
 
         public Task NavigateToAsync(string route, IDictionary<string, object> routeParameters = null)
         {

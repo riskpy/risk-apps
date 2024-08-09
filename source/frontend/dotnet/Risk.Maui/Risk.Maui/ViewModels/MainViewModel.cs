@@ -37,7 +37,7 @@ public partial class MainViewModel : ViewModelBase
 
                        _appEnvironmentService.UpdateDependencies(string.Empty);
 
-                       await NavigationService.NavigateToAsync("//LoginPage");
+                       await NavigationService.NavigateToAsync($"//{Routes.LoginPage}");
                    }
                    else
                    {
@@ -54,7 +54,7 @@ public partial class MainViewModel : ViewModelBase
 
                        _appEnvironmentService.UpdateDependencies(string.Empty);
 
-                       await NavigationService.NavigateToAsync("//LoginPage");
+                       await NavigationService.NavigateToAsync($"//{Routes.LoginPage}");
                    }
                    else
                    {

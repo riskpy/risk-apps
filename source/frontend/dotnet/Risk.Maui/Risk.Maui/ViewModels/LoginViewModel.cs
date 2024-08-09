@@ -58,7 +58,7 @@ public partial class LoginViewModel : ViewModelBase
 
             _appEnvironmentService.UpdateDependencies(sesionRespuesta.Datos.AccessToken);
 
-            await NavigationService.NavigateToAsync("//MainPage");
+            await NavigationService.NavigateToAsync($"//{Routes.MainPage}");
         }
         else
         {
