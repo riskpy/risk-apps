@@ -51,12 +51,12 @@
 
 	<ItemGroup>
 	  <PackageReference Include="epj.RouteGenerator" Version="1.0.1" />
-	  <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.40" />
-	  <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.40" />
+	  <PackageReference Include="Microsoft.Maui.Controls" Version="8.0.80" />
+	  <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.80" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="CommunityToolkit.Maui" Version="9.0.0" />
+	  <PackageReference Include="CommunityToolkit.Maui" Version="9.0.2" />
 	  <PackageReference Include="CommunityToolkit.MVVM" Version="8.2.2" />
 	</ItemGroup>
 
