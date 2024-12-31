@@ -58,10 +58,10 @@
 	<ItemGroup>
 	  <PackageReference Include="CommunityToolkit.Maui" Version="10.0.0" />
 	  <PackageReference Include="CommunityToolkit.MVVM" Version="8.4.0" />
+	  <PackageReference Include="Plugin.Maui.DebugRainbows" Version="1.2.1" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Models\" />
 	  <Folder Include="Helpers\" />
 	  <Folder Include="Validations\" />
 	</ItemGroup>
@@ -87,6 +87,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\CountriesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -18,6 +18,12 @@
         Icon="iconsample.png"
         Route="SamplePage"
         Shell.NavBarIsVisible="true" />
+    <ShellContent
+        Title="Countries"
+        ContentTemplate="{DataTemplate views:CountriesPage}"
+        Icon="iconsample.png"
+        Route="CountriesPage"
+        Shell.NavBarIsVisible="true" />
 
     <ShellItem Route="LoginPage">
         <ShellContent ContentTemplate="{DataTemplate views:LoginPage}" />

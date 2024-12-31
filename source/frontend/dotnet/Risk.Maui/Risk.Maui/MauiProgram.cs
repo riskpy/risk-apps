@@ -1,9 +1,10 @@
-﻿using Risk.Maui.Services.AppEnvironment;
+﻿using epj.RouteGenerator;
+using Plugin.Maui.DebugRainbows;
+using Risk.Maui.Services.AppEnvironment;
 using Risk.Maui.Services.Dialog;
 using Risk.Maui.Services.Navigation;
 using Risk.Maui.Services.OpenUrl;
 using Risk.Maui.Services.Settings;
-using epj.RouteGenerator;
 
 namespace Risk.Maui;
 
@@ -24,6 +25,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             })
+            //.UseDebugRainbows()
             .RegisterAppServices()
             .RegisterViewModels()
             .RegisterViews();
@@ -60,6 +62,7 @@ public static class MauiProgram
         mauiAppBuilder.Services.AddSingleton<MainViewModel>();
         mauiAppBuilder.Services.AddSingleton<SampleViewModel>();
         mauiAppBuilder.Services.AddSingleton<LoginViewModel>();
+        mauiAppBuilder.Services.AddSingleton<CountriesViewModel>();
 
         return mauiAppBuilder;
     }
@@ -69,6 +72,7 @@ public static class MauiProgram
         mauiAppBuilder.Services.AddSingleton<MainPage>();
         mauiAppBuilder.Services.AddSingleton<SamplePage>();
         mauiAppBuilder.Services.AddSingleton<LoginPage>();
+        mauiAppBuilder.Services.AddSingleton<CountriesPage>();
 
         return mauiAppBuilder;
     }
