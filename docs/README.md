@@ -20,7 +20,6 @@ Bienvenido/a a la documentación de las aplicaciones de referencia del Proyecto 
 
 Aplicación|Requerimiento
 ----------|-------------
-RISK ADMIN|[Oracle APEX](https://apex.oracle.com)
 Risk.Forms|[Xamarin.Forms](https://dotnet.microsoft.com/en-us/apps/xamarin/xamarin-forms)
 Risk.Maui|[.NET MAUI](https://dotnet.microsoft.com/en-us/apps/maui)
 
