@@ -50,15 +50,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="epj.RouteGenerator" Version="1.0.4" />
-	  <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.21" />
-	  <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.21" />
+	  <PackageReference Include="epj.RouteGenerator" Version="1.0.5" />
+	  <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.120" />
+	  <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="9.0.120" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="CommunityToolkit.Maui" Version="10.0.0" />
-	  <PackageReference Include="CommunityToolkit.MVVM" Version="8.4.0" />
-	  <PackageReference Include="Plugin.Maui.DebugRainbows" Version="1.2.1" />
+	  <PackageReference Include="CommunityToolkit.Maui" Version="12.3.0" />
+	  <PackageReference Include="CommunityToolkit.MVVM" Version="8.4.2" />
+	  <PackageReference Include="Plugin.Maui.DebugRainbows" Version="1.2.2" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -67,8 +67,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\..\..\..\risk\source\backend\Risk.API.Client\Risk.API.Client\src\Risk.API.Client\Risk.API.Client.csproj" />
-	  <ProjectReference Include="..\..\..\..\..\..\risk\source\backend\Risk.Common\Risk.Common.csproj" />
+	  <ProjectReference Include="..\..\..\..\..\..\risk\source\api\Risk.API.Client\Risk.API.Client\src\Risk.API.Client\Risk.API.Client.csproj" />
+	  <ProjectReference Include="..\..\..\..\..\..\risk\source\api\Risk.Common\Risk.Common.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

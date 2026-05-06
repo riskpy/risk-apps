@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Maui.Views;
+﻿using CommunityToolkit.Maui.Extensions;
 using Risk.Maui.Resources.Languages;
 
 namespace Risk.Maui.Services.Dialog
